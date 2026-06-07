@@ -20,7 +20,7 @@ export default function Register() {
   const thisYear = new Date().getFullYear();
   const userRef = useRef<HTMLInputElement>(null);
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const PASSWORD_REGEX = /^[A-Za-z0-9!@#$%]{8,24}$/;
+  const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9!@#$%]{8,24}$/;
   const NAME_REGEX = /^[a-zA-Z\s]{2,30}$/;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +28,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [persist, setPersist] = useLocalStorage<boolean>("persist", false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const validEmail = EMAIL_REGEX.test(email);
   const validPassword = PASSWORD_REGEX.test(password);
   const validName = NAME_REGEX.test(name);
@@ -83,11 +84,7 @@ export default function Register() {
     setName(e.target.value);
   return (
     <div className="min-h-screen bg-gray-50 flex-col flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white rounded-xl p-8 flex flex-col mt-20 mb-20 md:m-0 shadow-xl">
-        <p className="text-blue-600 text-[15px] font-semibold my-10 text-center">
-          Coursa
-        </p>
-
+      <div className="w-full max-w-md bg-white rounded-xl p-8 flex flex-col mt-20 mb-20 md:mb-0 md:mt-4 shadow-xl">
         <h1 className="text-black font-semibold text-[2rem] text-center">
           Create Account
         </h1>
@@ -126,7 +123,7 @@ export default function Register() {
             onBlur={() => setUserFocus(false)}
           />
           {userFocus && name.length > 0 && !validName && (
-            <div className="bg-[#1E3160] border border-[#C9A84C26] rounded-md p-3 mt-2 text-[0.65rem] text-[#8A93A8] space-y-1">
+            <div className="bg-gray-700 border border-[#C9A84C26] rounded-md p-3 mt-2 text-[0.65rem] text-[#8A93A8] space-y-1">
               <p className="text-[#C9A84C] font-semibold mb-1">
                 Name requirements:
               </p>
@@ -194,6 +191,8 @@ export default function Register() {
               }`}
               value={password}
               onChange={handlePwdInput}
+              onFocus={() => setPasswordFocus(true)}
+              onBlur={() => setPasswordFocus(false)}
             />
             <button
               type="button"
@@ -225,42 +224,42 @@ export default function Register() {
             )}
           </div>
           <div className="flex justify-between mt-5">
-            <Label htmlFor="confirm password" className="text-gray-700">
+            <Label htmlFor="confirm password" className="text-gray-700 ">
               Confirm Password
             </Label>
             <p
               className={
-                !validEmail && email.length > 0
+                !passwordsMatch && confirmPassword.length > 0
                   ? "text-red-500 text-md"
                   : "hidden"
               }
             >
-              Enter a valid Email
+              Passwords do not match
             </p>
           </div>
-          <Input
-            name="email"
-            type="text"
-            placeholder="you@example.com"
-            className={`w-full mt-3 rounded-sm p-5 text-black focus:outline-none bg-gray-50  border-gray-900 ${
-              !validEmail && email.length > 0
-                ? "border-red-600 focus:border-red-600"
-                : email.length === 0
-                  ? "border-gray-900"
-                  : "border-green-500"
-            }`}
-            value={email}
-            onChange={handleEmailInput}
-          />
-        </div>
-        <div className="mt-5 flex items-center gap-3">
-          <Checkbox
-            id="persist"
-            checked={persist}
-            onCheckedChange={(checked) => setPersist(checked as boolean)}
-            className="bg-gray-300 text-black p-2 rounded-md"
-          />
-          <p className="text-gray-700">Keep me signed in</p>
+          <div className="relative">
+            <Input
+              name=" confirm password"
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Re-enter your password"
+              className={`w-full mt-3 rounded-sm p-5 text-black focus:outline-none bg-gray-50 border-gray-900 ${
+                !passwordsMatch && confirmPassword.length > 0
+                  ? "border-red-600 focus:border-red-600"
+                  : confirmPassword.length === 0
+                    ? "border-gray-900"
+                    : "border-green-500"
+              }`}
+              value={confirmPassword}
+              onChange={handleConfirmPwdInput}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8A93A8] hover:text-white mt-1.5"
+            >
+              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
         </div>
         <Button
           type="button"
@@ -268,16 +267,20 @@ export default function Register() {
           title="Get started"
           className=" bg-blue-600 w-full mt-5 rounded-sm p-5"
           onClick={handleSubmit}
-          disabled={isLoading}
+          disabled={!canSubmit || isLoading}
         >
-          {isLoading ? <LoaderCircle className="animate-spin" /> : "Sign In"}
+          {isLoading ? (
+            <LoaderCircle className="animate-spin" />
+          ) : (
+            "Create account"
+          )}
         </Button>
 
-        <div className="w-full bg-gray-500 h-px my-10"></div>
+        <div className="w-full bg-gray-200 h-px my-5"></div>
         <p className="text-center text-[1rem]">
-          New to Coursa?{" "}
+          Already have an account?{" "}
           <span className="text-blue-800 font-semibold">
-            <Link to="/register">Create an account</Link>
+            <Link to="/login">Sign In</Link>
           </span>
         </p>
       </div>
