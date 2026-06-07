@@ -4,6 +4,7 @@ import { LoaderCircle } from "lucide-react";
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
 import RequireAdmin from "./features/auth/RequireAdmin";
+import { Toaster } from "./components/ui/toaster";
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
@@ -41,6 +42,7 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
+      <Toaster />
     </>
   );
 }
