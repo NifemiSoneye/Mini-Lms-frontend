@@ -23,8 +23,15 @@ export const progressApiSlice = apiSlice.injectEndpoints({
         { type: "Course", id: "LIST" },
       ],
     }),
+    getMyCourses: builder.query({
+      query: () => "/progress/my-courses",
+      providesTags: [{ type: "Progress", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetProgressQuery, useMarkLessonCompleteMutation } =
-  progressApiSlice;
+export const {
+  useGetProgressQuery,
+  useMarkLessonCompleteMutation,
+  useGetMyCoursesQuery,
+} = progressApiSlice;

@@ -7,7 +7,7 @@ import RequireAdmin from "./features/auth/RequireAdmin";
 import { Toaster } from "./components/ui/toaster";
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
-const CoursePage = lazy(() => import("./pages/CoursePage"));
+const HomePage = lazy(() => import("./pages/CoursePage"));
 const CourseDetailsPage = lazy(() => import("./pages/CourseDetailsPage"));
 const VideoLessonPage = lazy(() => import("./pages/VideoLessonPage"));
 const AdminDashBoard = lazy(() => import("./pages/AdminDashBoard"));
@@ -29,7 +29,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth />}>
-              <Route path="/courses" element={<CoursePage />} />
+              <Route path="/courses" element={<HomePage />} />
               <Route path="/courses/:id" element={<CourseDetailsPage />} />
               <Route
                 path="/courses/:id/lessons/:lessonId"
