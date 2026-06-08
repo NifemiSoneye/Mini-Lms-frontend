@@ -27,6 +27,13 @@ export const progressApiSlice = apiSlice.injectEndpoints({
       query: () => "/progress/my-courses",
       providesTags: [{ type: "Progress", id: "LIST" }],
     }),
+    enrollInCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `/progress/${courseId}/enroll`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "Progress", id: "LIST" }],
+    }),
   }),
 });
 
@@ -34,4 +41,5 @@ export const {
   useGetProgressQuery,
   useMarkLessonCompleteMutation,
   useGetMyCoursesQuery,
+  useEnrollInCourseMutation,
 } = progressApiSlice;

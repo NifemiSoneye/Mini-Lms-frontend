@@ -8,6 +8,7 @@ export interface Course {
   isPublished: boolean;
   createdAt?: string;
   updatedAt?: string;
+  lessonCount: number;
 }
 
 export interface Lesson {
