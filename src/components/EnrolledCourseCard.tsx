@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 type ProgressDoc = {
   _id: string;
   completedLessons: string[];
@@ -19,9 +20,40 @@ type Props = {
 
 export default function EnrolledCourseCard({ progressDocs, isLoading }: Props) {
   const navigate = useNavigate();
+
+  const EnrolledCourseCardSkeleton = () => {
+    return (
+      <div className="bg-white rounded-md overflow-hidden p-4">
+        <Skeleton className="h-40 w-full rounded-md" />
+        <Skeleton className="h-3 w-24 mt-3" />
+        <Skeleton className="h-5 w-3/4 mt-2" />
+        <Skeleton className="h-3 w-1/3 mt-2" />
+        <Skeleton className="h-9 w-full mt-3" />
+      </div>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-4 m-3 md:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <EnrolledCourseCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+  if (progressDocs.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-32">
+        <p className="text-black text-[1.5rem] font-medium">
+          No Courses match the description
+        </p>
+      </div>
+    );
+  }
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 m-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 m-3">
         {progressDocs.map((doc) => (
           <div
             key={doc._id}
