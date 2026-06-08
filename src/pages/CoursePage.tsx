@@ -124,7 +124,6 @@ export default function CoursePage() {
           isLoading={myCoursesLoading}
         />
       )}
-      ;
     </>
   );
 }

@@ -29,7 +29,7 @@ const Header = () => {
   const menuIcon = new URL("../assets/icon-hamburger.svg", import.meta.url)
     .href;
   return (
-    <div className="bg-white flex justify-between py-2 lg:px-5 px-3 border-b shadow-xl">
+    <div className="bg-white flex justify-between py-2 lg:py-1 lg:px-5 px-3 border-b shadow-xl">
       <div className="flex items-center">
         <Button
           type="button"
@@ -41,7 +41,7 @@ const Header = () => {
           <img
             src={menuIcon}
             alt="hamburger icon"
-            className="cursor-pointer h-4 w-4 text-blue-500"
+            className="cursor-pointer h-4 w-5 text-blue-500"
           />
         </Button>
 
@@ -59,7 +59,7 @@ const Header = () => {
             type="button"
             variant="default"
             title="Sidebar"
-            className="bg-[#C9A84C] text-black lg:m-3 lg:p-5 rounded-sm transition-all duration-300 sm:max-w-[10vw] px-5  hover:border-[#E2C47A] hover:bg-[#E2C47A] hover:shadow-[0_0_10px_rgba(226,196,122,1.0)] transform hover:-translate-y-px"
+            className="bg-blue-500 text-white lg:m-3 lg:p-5 rounded-sm transition-all duration-300 sm:max-w-[10vw] px-5  hover:border-[#E2C47A] hover:bg-[#E2C47A] hover:shadow-[0_0_10px_rgba(226,196,122,1.0)] transform hover:-translate-y-px"
             onClick={handleLogout}
           >
             <FontAwesomeIcon icon={faRightFromBracket} />
