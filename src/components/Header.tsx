@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { useSendLogoutMutation } from "@/features/auth/authApiSlice";
 import { useNavigate } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
-const DashNav = () => {
+const Header = () => {
   // dispatch actions
   const dispatch = useDispatch();
   const [sendLogout, { isLoading }] = useSendLogoutMutation();
@@ -26,10 +26,10 @@ const DashNav = () => {
     }
   };
 
-  const menuIcon = new URL("../../assets/icon-hamburger.svg", import.meta.url)
+  const menuIcon = new URL("../assets/icon-hamburger.svg", import.meta.url)
     .href;
   return (
-    <div className="bg-white flex justify-between py-2 lg:px-5 px-3 border-b border-b-[#292c33] shadow-2xl">
+    <div className="bg-white flex justify-between py-2 lg:px-5 px-3 border-b shadow-xl">
       <div className="flex items-center">
         <Button
           type="button"
@@ -70,4 +70,4 @@ const DashNav = () => {
   );
 };
 
-export default DashNav;
+export default Header;

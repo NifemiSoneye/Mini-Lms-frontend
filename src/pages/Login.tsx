@@ -55,7 +55,7 @@ export default function Login() {
       });
       setEmail("");
       setPassword("");
-      navigate("/courses");
+      navigate("/home");
     } catch (err: any) {
       toast({
         variant: "default",

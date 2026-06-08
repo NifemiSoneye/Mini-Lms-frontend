@@ -7,11 +7,12 @@ import RequireAdmin from "./features/auth/RequireAdmin";
 import { Toaster } from "./components/ui/toaster";
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
-const HomePage = lazy(() => import("./pages/CoursePage"));
+const HomePage = lazy(() => import("./pages/HomePage"));
 const CourseDetailsPage = lazy(() => import("./pages/CourseDetailsPage"));
 const VideoLessonPage = lazy(() => import("./pages/VideoLessonPage"));
 const AdminDashBoard = lazy(() => import("./pages/AdminDashBoard"));
 const Landing = lazy(() => import("./pages/Landing"));
+const DashLayout = lazy(() => import("./components/DashLayout"));
 
 function App() {
   return (
@@ -29,12 +30,14 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth />}>
-              <Route path="/courses" element={<HomePage />} />
-              <Route path="/courses/:id" element={<CourseDetailsPage />} />
-              <Route
-                path="/courses/:id/lessons/:lessonId"
-                element={<VideoLessonPage />}
-              />
+              <Route path="/" element={<DashLayout />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/courses/:id" element={<CourseDetailsPage />} />
+                <Route
+                  path="/courses/:id/lessons/:lessonId"
+                  element={<VideoLessonPage />}
+                />
+              </Route>
               <Route element={<RequireAdmin />}>
                 <Route path="/admin" element={<AdminDashBoard />} />
               </Route>
