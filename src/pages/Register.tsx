@@ -83,7 +83,7 @@ export default function Register() {
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
   return (
-    <div className="min-h-screen bg-gray-50 flex-col flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-100 flex-col flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl p-8 flex flex-col mt-20 mb-20 md:mb-0 md:mt-4 shadow-xl">
         <h1 className="text-black font-semibold text-[2rem] text-center">
           Create Account

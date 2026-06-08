@@ -70,7 +70,7 @@ export default function Login() {
   const handlePwdInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
   return (
-    <div className="min-h-screen bg-gray-50 flex-col flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-100 flex-col flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl p-8 flex flex-col mt-20 mb-20 md:m-0 shadow-xl">
         <p className="text-blue-600 text-[15px] font-semibold my-10 text-center">
           Coursa
