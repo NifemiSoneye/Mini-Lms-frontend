@@ -1,6 +1,10 @@
 import React from "react";
 import { type EntityState } from "@reduxjs/toolkit";
 import { type Course } from "@/lib/types";
+import { Button } from "./ui/button";
+import { useEnrollInCourseMutation } from "@/features/progress/progressApiSlice";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   courses: Course[];
@@ -8,7 +12,25 @@ type Props = {
 };
 
 export default function CourseCard({ courses, isLoading }: Props) {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [enroll, { isLoading: isEnrollLoading }] = useEnrollInCourseMutation();
   console.log(courses);
+  const handleEnroll = async (courseId: string) => {
+    try {
+      await enroll(courseId).unwrap();
+      toast({
+        title: "Enrolled successfully! 🎉",
+        description: "Course added to your list",
+      });
+    } catch (err: any) {
+      toast({
+        variant: "default",
+        title: "Error! 🎉",
+        description: "Enroll Error",
+      });
+    }
+  };
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 m-3">
@@ -31,6 +53,16 @@ export default function CourseCard({ courses, isLoading }: Props) {
             <p className="text-gray-800  text-[0.875rem]">
               {course.lessonCount} lessons
             </p>
+
+            <div>
+              <Button
+                variant="default"
+                className="text-blue-500 bg-blue-100 w-full my-2 rounded-sm"
+                onClick={() => handleEnroll(course.id)}
+              >
+                Enroll
+              </Button>
+            </div>
           </div>
         ))}
       </div>

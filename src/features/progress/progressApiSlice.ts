@@ -23,7 +23,7 @@ export const progressApiSlice = apiSlice.injectEndpoints({
         { type: "Course", id: "LIST" },
       ],
     }),
-    getMyCourses: builder.query({
+    getMyCourses: builder.query<any[], void>({
       query: () => "/progress/my-courses",
       providesTags: [{ type: "Progress", id: "LIST" }],
     }),

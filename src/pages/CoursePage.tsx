@@ -5,17 +5,19 @@ import { useGetMyCoursesQuery } from "@/features/progress/progressApiSlice";
 import CourseCard from "@/components/CourseCard";
 import { useSelector } from "react-redux";
 import { selectAllCourses } from "@/features/courses/courseApiSlice";
+import EnrolledCourseCard from "@/components/EnrolledCourseCard";
 
 export default function CoursePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get("tab") || "My Courses";
   const { data: allCoursesData, isLoading: allLoading } =
     useGetCoursesQuery(undefined);
-  const { data: myCourses, isLoading: myCoursesLoading } =
+  const { data: myCoursesData, isLoading: myCoursesLoading } =
     useGetMyCoursesQuery(undefined);
   const allCourses = allCoursesData?.entities
     ? Object.values(allCoursesData.entities)
     : [];
+  const myCourses = myCoursesData ? myCoursesData : [];
 
   type Tab = "My Courses" | "All Courses";
 
@@ -42,6 +44,12 @@ export default function CoursePage() {
       </div>
       {activeTab === "All Courses" && (
         <CourseCard courses={allCourses} isLoading={allLoading} />
+      )}
+      {activeTab === "My Courses" && (
+        <EnrolledCourseCard
+          progressDocs={myCourses}
+          isLoading={myCoursesLoading}
+        />
       )}
       ;
     </>
