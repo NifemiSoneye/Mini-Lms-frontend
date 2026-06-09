@@ -147,7 +147,7 @@ export default function CoursePage() {
         ))}
       </div>
       {totalPages > 1 && (
-        <div className=" flex items-center gap-4 my-1 mx-3 justify-end">
+        <div className=" flex items-center gap-4 my-1 mx-3 justify-end min-w-0">
           <button
             onClick={() => setPage((p) => p - 1)}
             disabled={page === 1}
