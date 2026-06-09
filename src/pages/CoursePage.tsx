@@ -68,7 +68,7 @@ export default function CoursePage() {
   };
   const latestCourse = myCourses[myCourses.length - 1];
   return (
-    <>
+    <div className="w-full overflow-x-hidden flex flex-col gap-3">
       {latestCourse ? (
         <div className="bg-blue-600 rounded-md border border-gray-100 p-4  text-white md:max-w-[50%]">
           <p className="text-sm text-blue-200">Current Progress</p>
@@ -119,7 +119,7 @@ export default function CoursePage() {
           <button
             key={tab}
             onClick={() => setTab(tab)}
-            className={`flex-1 flex items-center justify-center gap-5 py-3 text-[0.78rem] font-medium border-b transition-colors
+            className={`flex-1 flex items-center justify-center gap-5 py-1 text-[0.78rem] font-medium border-b transition-colors
                   ${
                     activeTab === tab
                       ? "text-blue-500 border-blue-600"
@@ -130,12 +130,12 @@ export default function CoursePage() {
           </button>
         ))}
       </div>
-      <div className="flex gap-2 px-3 py-2 overflow-x-auto">
+      <div className="grid grid-cols-3 gap-2 px-3 py-1">
         {allCategories.map((category) => (
           <button
             key={category}
             onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors
+            className={` p-1.5 rounded-full text-sm font-medium transition-colors text-center w-full truncate
         ${
           activeCategory === category
             ? "bg-blue-600 text-white"
@@ -147,7 +147,7 @@ export default function CoursePage() {
         ))}
       </div>
       {totalPages > 1 && (
-        <div className=" flex items-center gap-4 my-1 mx-3 justify-end min-w-0">
+        <div className=" flex items-center gap-4 my-1 mx-3 justify-end min-w-0 ">
           <button
             onClick={() => setPage((p) => p - 1)}
             disabled={page === 1}
@@ -168,14 +168,18 @@ export default function CoursePage() {
         </div>
       )}
       {activeTab === "All Courses" && (
-        <CourseCard courses={paginatedUnenrolled} isLoading={allLoading} />
+        <div className="w-full overflow-hidden">
+          <CourseCard courses={paginatedUnenrolled} isLoading={allLoading} />
+        </div>
       )}
       {activeTab === "My Courses" && (
-        <EnrolledCourseCard
-          progressDocs={paginatedMyCourses}
-          isLoading={myCoursesLoading}
-        />
+        <div className="w-full overflow-hidden">
+          <EnrolledCourseCard
+            progressDocs={paginatedMyCourses}
+            isLoading={myCoursesLoading}
+          />
+        </div>
       )}
-    </>
+    </div>
   );
 }

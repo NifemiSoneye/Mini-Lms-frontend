@@ -8,7 +8,7 @@ const DashLayout = () => {
       <Header />
       <div className="flex min-h-screen bg-gray-100">
         <SideBar />
-        <main className="flex-1 flex flex-col">
+        <main className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
           <div className="flex-1">
             <Outlet />
           </div>

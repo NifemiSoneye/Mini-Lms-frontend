@@ -46,7 +46,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-4 m-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 my-3 md:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
           <CourseCardSkeleton key={i} />
         ))}
@@ -65,9 +65,9 @@ export default function CourseCard({ courses, isLoading }: Props) {
   }
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 m-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 my-3">
         {courses.map((course) => (
-          <div className="bg-white rounded-md overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-shadow duration-300 p-4">
+          <div className="bg-white rounded-md overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-shadow duration-300 p-4 min-w-0">
             {/* IMAGE */}
             <div className="h-40 w-full">
               <img

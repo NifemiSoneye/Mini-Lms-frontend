@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Lock, LockOpen } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function VideoLessonPage() {
   const { id, lessonId } = useParams<{ id: string; lessonId: string }>();
@@ -27,7 +28,67 @@ export default function VideoLessonPage() {
     useMarkLessonCompleteMutation();
   const { toast } = useToast();
   const navigate = useNavigate();
-  if (isCourseLoading || isProgressLoading) return <div>Loading...</div>;
+
+  function VideoLessonSkeleton() {
+    return (
+      <div className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-5 m-4">
+        <div className="flex flex-col gap-3">
+          <Skeleton className="w-full aspect-video lg:h-[60vh] rounded-xl bg-white" />
+
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-6 w-2/3" />
+
+          <Skeleton className="h-11 w-full rounded-sm" />
+
+          <div className="grid grid-cols-2 gap-3">
+            <Skeleton className="h-11 rounded-sm" />
+            <Skeleton className="h-11 rounded-sm" />
+          </div>
+
+          <div className="lg:hidden bg-white rounded-md p-3 flex flex-col gap-2 min-h-[300px]">
+            <Skeleton className="h-4 w-28" />
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-3 px-3 py-1">
+                <Skeleton className="h-6 w-6 rounded-full shrink-0" />
+                <div className="flex flex-col gap-1 flex-1">
+                  <Skeleton className="h-3 w-14" />
+                  <Skeleton className="h-4 w-3/4" />
+                </div>
+              </div>
+            ))}
+            <div className="mt-auto pt-3 border-t border-gray-200 flex flex-col gap-2">
+              <div className="flex justify-between">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-3 w-8" />
+              </div>
+              <Skeleton className="h-2 w-full rounded-full" />
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden lg:flex flex-col gap-2 bg-white rounded-md p-3 min-h-[300px]">
+          <Skeleton className="h-4 w-28" />
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3 px-3 py-1">
+              <Skeleton className="h-6 w-6 rounded-full shrink-0" />
+              <div className="flex flex-col gap-1 flex-1">
+                <Skeleton className="h-3 w-14" />
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+            </div>
+          ))}
+          <div className="mt-auto pt-3 border-t border-gray-200 flex flex-col gap-2">
+            <div className="flex justify-between">
+              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-3 w-8" />
+            </div>
+            <Skeleton className="h-2 w-full rounded-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (isCourseLoading || isProgressLoading) return <VideoLessonSkeleton />;
   if (!courseData) return null;
   const { course, lessons } = courseData;
   const completedLessons = progressData?.completedLessons ?? [];
@@ -48,7 +109,7 @@ export default function VideoLessonPage() {
     try {
       const response = await mark({ courseId: id, lessonId }).unwrap();
       toast({
-        title: `${response.message} 🎉`,
+        title: "Success 🎉",
         description: "Lesson Completed",
       });
     } catch (err: any) {
@@ -128,7 +189,7 @@ export default function VideoLessonPage() {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div className="w-full bg-white p-3 rounded-md min-h-[300px] flex flex-col lg:hidden">
+          <div className="w-full bg-white p-3 rounded-md min-h-[300px] flex flex-col lg:hidden shadow-2xl">
             <h1 className="text-black font-semibold">Course Content</h1>
             {lessons.map((lesson: Lesson) => (
               <div
@@ -142,7 +203,7 @@ export default function VideoLessonPage() {
                   <PlayCircle className="w-6 h-6 mr-2 text-blue-700" />
                 ) : completedLessons.includes(lesson._id) ? (
                   <CheckCircle2 className="w-6 h-6 mr-2 text-blue-700" />
-                ) : lesson._id === nextLesson?._id && isCompleted ? (
+                ) : isCompleted ? (
                   <LockOpen className="w-6 h-6 mr-2 text-gray-500" />
                 ) : (
                   <Lock className="w-6 h-6 mr-2 text-gray-500" />
@@ -165,7 +226,7 @@ export default function VideoLessonPage() {
               </div>
               <div className="w-full bg-blue-400 rounded-full h-2 my-3 ">
                 <div
-                  className="bg-white rounded-full h-2 transition-all duration-300"
+                  className="bg-blue-900 rounded-full h-2 transition-all duration-300"
                   style={{
                     width: `${Math.round((completedLessons.length / lessons.length) * 100)}%`,
                   }}
@@ -210,7 +271,7 @@ export default function VideoLessonPage() {
             </div>
             <div className="w-full bg-blue-400 rounded-full h-2 my-3 ">
               <div
-                className="bg-white rounded-full h-2 transition-all duration-300"
+                className="bg-blue-900 rounded-full h-2 transition-all duration-300"
                 style={{
                   width: `${Math.round((completedLessons.length / lessons.length) * 100)}%`,
                 }}
