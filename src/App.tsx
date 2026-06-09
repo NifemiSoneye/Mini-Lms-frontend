@@ -37,9 +37,9 @@ function App() {
                   path="/courses/:id/lessons/:lessonId"
                   element={<VideoLessonPage />}
                 />
-              </Route>
-              <Route element={<RequireAdmin />}>
-                <Route path="/admin" element={<AdminDashBoard />} />
+                <Route element={<RequireAdmin />}>
+                  <Route path="/admin" element={<AdminDashBoard />} />
+                </Route>
               </Route>
             </Route>
           </Route>

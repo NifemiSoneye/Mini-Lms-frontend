@@ -84,6 +84,10 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       query: () => "/admin/stats",
       providesTags: [{ type: "Course", id: "LIST" }],
     }),
+    getAdminCourses: builder.query({
+      query: () => "/admin/courses",
+      providesTags: [{ type: "Course", id: "LIST" }],
+    }),
   }),
 });
 
@@ -95,6 +99,7 @@ export const {
   useDeleteCourseMutation,
   useTogglePublishMutation,
   useGetStatsQuery,
+  useGetAdminCoursesQuery,
 } = coursesApiSlice;
 
 // returns the query result object

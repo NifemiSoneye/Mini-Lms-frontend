@@ -10,6 +10,7 @@ import {
 } from "@/features/ui/uiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { LayoutDashboard } from "lucide-react";
 
 export default function SideBar() {
   const location = useLocation();
@@ -48,6 +49,18 @@ export default function SideBar() {
         >
           <Home className="w-5 h-5" />
           <p>Home</p>
+        </Link>
+        <Link
+          to="/admin"
+          className={`flex items-center gap-3 p-3 rounded-md mx-2 ${
+            location.pathname === "/admin"
+              ? "text-blue-600 bg-blue-50 font-medium"
+              : "text-gray-700"
+          }`}
+          onClick={() => dispatch(closeSidebar())}
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          <p>Admin</p>
         </Link>
       </aside>
     </>

@@ -1,0 +1,83 @@
+import { useGetStatsQuery } from "@/features/courses/courseApiSlice";
+import { BookOpen, PlayCircle, UsersRound } from "lucide-react";
+import { useGetAdminCoursesQuery } from "@/features/courses/courseApiSlice";
+
+export default function AdminOverview() {
+  const { data: stats, isLoading } = useGetStatsQuery(undefined);
+  const { data: adminCourses = [], isLoading: isCoursesLoading } =
+    useGetAdminCoursesQuery(undefined);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!stats) return null;
+
+  return (
+    <div className="mt-4">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-white rounded-xl p-4 shadow-sm">
+          <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
+            <BookOpen className="w-5 h-5 text-blue-600" />
+          </div>
+          <p className="text-3xl font-bold text-black">{stats.totalCourses}</p>
+          <p className="text-gray-500 text-sm mt-1">Total Courses</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-4 shadow-sm">
+          <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
+            <PlayCircle className="w-5 h-5 text-blue-600" />
+          </div>
+          <p className="text-3xl font-bold text-black">{stats.totalLessons}</p>
+          <p className="text-gray-500 text-sm mt-1">Total Lessons</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-4 shadow-sm col-span-2 lg:col-span-1">
+          <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
+            <UsersRound className="w-5 h-5 text-blue-600" />
+          </div>
+          <p className="text-3xl font-bold text-black">
+            {stats.totalEnrollments}
+          </p>
+          <p className="text-gray-500 text-sm mt-1">Total Enrollments</p>
+        </div>
+      </div>
+      {/* Recent Courses */}
+      <div className="bg-white rounded-xl shadow-sm mt-6">
+        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+          <h2 className="text-black font-semibold text-lg">Recent Courses</h2>
+        </div>
+        {isCoursesLoading ? (
+          <div className="p-4">Loading...</div>
+        ) : (
+          <div className="divide-y divide-gray-100">
+            {adminCourses.map((course: any) => (
+              <div key={course._id} className="flex items-center gap-3 p-4">
+                <img
+                  src={course.thumbnailUrl}
+                  alt={course.title}
+                  className="w-12 h-12 rounded-lg object-cover shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-black font-medium truncate">
+                    {course.title}
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    {course.category} • {course.lessonCount} Lessons
+                  </p>
+                </div>
+                <span
+                  className={`text-xs font-medium px-2 py-1 rounded-full shrink-0 ${
+                    course.isPublished
+                      ? "bg-green-100 text-green-700"
+                      : "bg-orange-100 text-orange-700"
+                  }`}
+                >
+                  {course.isPublished ? "Published" : "Draft"}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
