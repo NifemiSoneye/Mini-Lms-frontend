@@ -6,6 +6,7 @@ import CourseCard from "@/components/CourseCard";
 import { useSelector } from "react-redux";
 import { selectAllCourses } from "@/features/courses/courseApiSlice";
 import EnrolledCourseCard from "@/components/EnrolledCourseCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function CoursePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +15,8 @@ export default function CoursePage() {
     useGetCoursesQuery(undefined);
   const { data: myCoursesData, isLoading: myCoursesLoading } =
     useGetMyCoursesQuery(undefined);
-
+  const [page, setPage] = useState(1);
+  const coursesPerPage = 3;
   const allCourses = allCoursesData?.entities
     ? Object.values(allCoursesData.entities)
     : [];
@@ -39,11 +41,30 @@ export default function CoursePage() {
     activeCategory === "All"
       ? myCourses
       : myCourses.filter((doc) => doc.course.category === activeCategory);
+  const paginatedUnenrolled = filteredUnenrolled.slice(
+    (page - 1) * coursesPerPage,
+    page * coursesPerPage,
+  );
+
+  const paginatedMyCourses = filteredMyCourses.slice(
+    (page - 1) * coursesPerPage,
+    page * coursesPerPage,
+  );
+
+  const totalPages =
+    activeTab === "All Courses"
+      ? Math.ceil(filteredUnenrolled.length / coursesPerPage)
+      : Math.ceil(filteredMyCourses.length / coursesPerPage);
 
   type Tab = "My Courses" | "All Courses";
 
   const setTab = (tab: Tab) => {
     setSearchParams({ tab }, { replace: true });
+    setPage(1);
+  };
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setPage(1);
   };
   const latestCourse = myCourses[myCourses.length - 1];
   return (
@@ -109,11 +130,11 @@ export default function CoursePage() {
           </button>
         ))}
       </div>
-      <div className="flex gap-2 p-3 overflow-x-auto">
+      <div className="flex gap-2 px-3 py-2 overflow-x-auto">
         {allCategories.map((category) => (
           <button
             key={category}
-            onClick={() => setActiveCategory(category)}
+            onClick={() => handleCategoryChange(category)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors
         ${
           activeCategory === category
@@ -125,12 +146,33 @@ export default function CoursePage() {
           </button>
         ))}
       </div>
+      {totalPages > 1 && (
+        <div className=" flex items-center gap-4 my-1 mx-3 justify-end">
+          <button
+            onClick={() => setPage((p) => p - 1)}
+            disabled={page === 1}
+            className="disabled:opacity-40"
+          >
+            <ChevronLeft className="w-5 h-5 text-blue-600" />
+          </button>
+          <p className="text-sm text-gray-600">
+            {page} / {totalPages}
+          </p>
+          <button
+            onClick={() => setPage((p) => p + 1)}
+            disabled={page === totalPages}
+            className="disabled:opacity-40"
+          >
+            <ChevronRight className="w-5 h-5 text-blue-600" />
+          </button>
+        </div>
+      )}
       {activeTab === "All Courses" && (
-        <CourseCard courses={filteredUnenrolled} isLoading={allLoading} />
+        <CourseCard courses={paginatedUnenrolled} isLoading={allLoading} />
       )}
       {activeTab === "My Courses" && (
         <EnrolledCourseCard
-          progressDocs={filteredMyCourses}
+          progressDocs={paginatedMyCourses}
           isLoading={myCoursesLoading}
         />
       )}
