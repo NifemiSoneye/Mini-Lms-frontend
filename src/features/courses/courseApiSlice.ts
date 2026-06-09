@@ -80,6 +80,10 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         { type: "Course", id: "LIST" },
       ],
     }),
+    getStats: builder.query({
+      query: () => "/admin/stats",
+      providesTags: [{ type: "Course", id: "LIST" }],
+    }),
   }),
 });
 
@@ -90,6 +94,7 @@ export const {
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useTogglePublishMutation,
+  useGetStatsQuery,
 } = coursesApiSlice;
 
 // returns the query result object

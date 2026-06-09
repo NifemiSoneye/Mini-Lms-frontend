@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { type Lesson } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
-import { PlayCircle } from "lucide-react";
+import { PlayCircle, ChevronLeft } from "lucide-react";
 import { useMarkLessonCompleteMutation } from "@/features/progress/progressApiSlice";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
@@ -101,10 +101,10 @@ export default function VideoLessonPage() {
     const videoId = url.split("v=")[1]?.split("&")[0];
     return `https://www.youtube.com/embed/${videoId}`;
   };
-  const getYoutubeThumbnail = (url: string) => {
+  /* const getYoutubeThumbnail = (url: string) => {
     const videoId = url.split("v=")[1]?.split("&")[0];
     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  };
+  }; */
   const handleMarkComplete = async () => {
     try {
       const response = await mark({ courseId: id, lessonId }).unwrap();
@@ -124,6 +124,13 @@ export default function VideoLessonPage() {
   return (
     <div className="lg:grid lg:grid-cols-[1.5fr_1fr] lg:gap-5 m-4">
       <div>
+        <button
+          onClick={() => navigate(`/courses/${id}`)}
+          className="flex items-center gap-1 text-blue-600 text-sm mb-3 lg:hidden"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Back to Course
+        </button>
         <div className="relative w-full aspect-video lg:rounded-xl overflow-hidden rounded-md lg:h-[60vh] shadow-2xl ">
           <iframe
             src={getYoutubeEmbedUrl(currentLesson.youtubeUrl)}
@@ -193,6 +200,7 @@ export default function VideoLessonPage() {
             <h1 className="text-black font-semibold">Course Content</h1>
             {lessons.map((lesson: Lesson) => (
               <div
+                key={lesson._id}
                 className={`flex items-center my-2 px-3 py-1 ${
                   lesson._id === currentLesson._id
                     ? "bg-blue-700/20 rounded-md"
@@ -203,7 +211,7 @@ export default function VideoLessonPage() {
                   <PlayCircle className="w-6 h-6 mr-2 text-blue-700" />
                 ) : completedLessons.includes(lesson._id) ? (
                   <CheckCircle2 className="w-6 h-6 mr-2 text-blue-700" />
-                ) : isCompleted ? (
+                ) : lesson._id === nextLesson?._id && isCompleted ? (
                   <LockOpen className="w-6 h-6 mr-2 text-gray-500" />
                 ) : (
                   <Lock className="w-6 h-6 mr-2 text-gray-500" />
@@ -237,10 +245,19 @@ export default function VideoLessonPage() {
         </section>
       </div>
       <div>
+        <Button
+          variant="link"
+          onClick={() => navigate(`/courses/${id}`)}
+          className=" items-center gap-1 text-blue-600 text-sm mb-3 hidden lg:flex hover:no-underline hover:cursor-pointer"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Back to Course
+        </Button>
         <div className="w-full bg-white p-3 rounded-md min-h-[300px] lg:flex flex-col hidden shadow-2xl ">
           <h1 className="text-black font-semibold">Course Content</h1>
           {lessons.map((lesson: Lesson) => (
             <div
+              key={lesson._id}
               className={`flex items-center my-2 px-3 py-1 ${
                 lesson._id === currentLesson._id
                   ? "bg-blue-700/20 rounded-md"
