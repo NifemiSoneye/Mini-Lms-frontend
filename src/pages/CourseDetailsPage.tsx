@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Circle, PlayCircle } from "lucide-react";
 import { UsersRound } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CourseDetailsPage() {
   const navigate = useNavigate();
@@ -14,8 +15,48 @@ export default function CourseDetailsPage() {
     useGetCourseByIdQuery(id);
   const { data: progressData, isLoading: isProgressLoading } =
     useGetProgressQuery({ courseId: id });
-  if (isCourseLoading || isProgressLoading) return <div>Loading...</div>;
-  if (!courseData) return null;
+  function CourseDetailsSkeleton() {
+    return (
+      <div className="mx-4 lg:grid lg:grid-cols-[1.5fr_1fr] gap-5">
+        <div>
+          {/* Thumbnail */}
+          <Skeleton className="my-4 h-48 md:h-80 rounded-xl w-full bg-gray-200" />
+
+          {/* Mobile text */}
+          <div className="md:hidden space-y-2 mb-3">
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-7 w-3/4" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+
+          {/* Progress card mobile */}
+          <Skeleton className="h-36 w-full rounded-lg my-3 md:hidden" />
+
+          {/* Lesson list */}
+          <div className="bg-white rounded-md shadow-xl p-3 space-y-3">
+            <Skeleton className="h-6 w-36" />
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-2 p-2">
+                <Skeleton className="h-8 w-8 rounded-full shrink-0" />
+                <div className="space-y-1 flex-1">
+                  <Skeleton className="h-3 w-16" />
+                  <Skeleton className="h-4 w-48" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Progress card desktop */}
+        <div className="hidden md:block lg:mx-5 my-1 bg-gray-200 h-[50%]">
+          <Skeleton className="h-64 w-full rounded-lg my-3" />
+        </div>
+      </div>
+    );
+  }
+
+  if (isCourseLoading || isProgressLoading) return <CourseDetailsSkeleton />;
 
   const { course, lessons } = courseData;
   const completedLessons = progressData?.completedLessons ?? [];
