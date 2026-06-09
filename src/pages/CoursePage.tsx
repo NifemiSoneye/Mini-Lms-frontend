@@ -48,7 +48,7 @@ export default function CoursePage() {
   const latestCourse = myCourses[myCourses.length - 1];
   return (
     <>
-      {latestCourse && (
+      {latestCourse ? (
         <div className="bg-blue-600 rounded-md border border-gray-100 p-4  text-white md:max-w-[50%]">
           <p className="text-sm text-blue-200">Current Progress</p>
           <p className="text-xl font-bold mt-1">{latestCourse.course.title}</p>
@@ -81,6 +81,16 @@ export default function CoursePage() {
               % Complete
             </p>
           </div>
+        </div>
+      ) : (
+        <div className="bg-blue-600 rounded-md border border-gray-100 p-4  text-white md:max-w-[50%]">
+          <p className="text-sm text-blue-200">Get Started</p>
+          <p className="text-xl font-bold mt-1">
+            You have no enrolled courses yet
+          </p>
+          <p className="text-sm text-blue-200 mt-2">
+            Browse all courses and start learning today
+          </p>
         </div>
       )}
       <div className="flex border-b border-gray-200 gap-2">
