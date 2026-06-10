@@ -18,8 +18,6 @@ export default function AdminDashboard() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold text-black">Admin Dashboard</h1>
-
-      {/* Tabs */}
       <div className="flex border-b border-gray-200 gap-4 mt-4">
         {(["Overview", "Courses", "Lessons"] as Tab[]).map((tab) => (
           <button
@@ -35,8 +33,6 @@ export default function AdminDashboard() {
           </button>
         ))}
       </div>
-
-      {/* Overview Tab */}
       {activeTab === "Overview" && <AdminOverview />}
     </div>
   );

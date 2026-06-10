@@ -12,7 +12,6 @@ export default function AdminOverview() {
 
   return (
     <div className="mt-4">
-      {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl p-4 shadow-sm">
           <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
@@ -40,7 +39,6 @@ export default function AdminOverview() {
           <p className="text-gray-500 text-sm mt-1">Total Enrollments</p>
         </div>
       </div>
-      {/* Recent Courses */}
       <div className="bg-white rounded-xl shadow-sm mt-6">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <h2 className="text-black font-semibold text-lg">Recent Courses</h2>
