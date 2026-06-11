@@ -20,6 +20,7 @@ export const progressApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, courseId) => [
         { type: "Progress", id: courseId },
+        { type: "Progress", id: "LIST" },
         { type: "Course", id: "LIST" },
       ],
     }),

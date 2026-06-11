@@ -61,7 +61,7 @@ export default function AdminOverview() {
         <div className="bg-white rounded-xl p-4 shadow-sm animate-fade-slide-up">
           <div
             style={{ animationDelay: "0s", opacity: 0 }}
-            className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3"
+            className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3 animate-fade-slide-up"
           >
             <BookOpen className="w-5 h-5 text-blue-600" />
           </div>
