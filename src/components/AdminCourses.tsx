@@ -9,15 +9,20 @@ import { Pencil, Trash2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { useState } from "react";
-import { LoaderCircle } from "lucide-react";
-import { Textarea } from "./ui/textarea";
 import { type Course } from "@/lib/types";
 import { CourseModal } from "./CourseModal";
 import { Skeleton } from "./ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 export default function AdminCourses() {
   const { data: adminCourses, isLoading: isAdminCoursesLoading } =
     useGetAdminCoursesQuery(undefined);
@@ -33,6 +38,7 @@ export default function AdminCourses() {
   const [courseThumbnail, setCourseThumbnail] = useState<string>("");
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [courseToDelete, setCourseToDelete] = useState<string | null>(null);
 
   const handleCreate = async () => {
     try {
@@ -157,7 +163,7 @@ export default function AdminCourses() {
                 </button>
                 <button
                   className="bg-red-50 p-2 rounded-full hover:bg-red-100 transition-colors"
-                  onClick={() => handleDelete(course._id)}
+                  onClick={() => setCourseToDelete(course._id)}
                 >
                   <Trash2 className="w-4 h-4 text-red-500" />
                 </button>
@@ -181,6 +187,32 @@ export default function AdminCourses() {
         onClose={handleClose}
         course={selectedCourse ?? undefined}
       />
+      <AlertDialog
+        open={!!courseToDelete}
+        onOpenChange={() => setCourseToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Course</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the course and all its lessons. This
+              action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700"
+              onClick={() => {
+                if (courseToDelete) handleDelete(courseToDelete);
+                setCourseToDelete(null);
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -133,7 +133,7 @@ export function CourseModal({ isOpen, onClose, course }: CourseModalProps) {
         </Label>
         <Input
           className="w-full border border-gray-300 rounded-md p-5 focus:outline-none focus:border-blue-600"
-          placeholder="Fashion"
+          placeholder="e.g Fashion"
           value={courseCategory}
           onChange={(e) => setCourseCategory(e.target.value)}
         />
@@ -145,7 +145,7 @@ export function CourseModal({ isOpen, onClose, course }: CourseModalProps) {
         </Label>
         <Input
           className="w-full border border-gray-300 rounded-md p-5 focus:outline-none focus:border-blue-600"
-          placeholder="https://unsplash.com/yourthumbnail"
+          placeholder="e.g. https://unsplash.com/yourthumbnail"
           value={courseThumbnail}
           onChange={(e) => setCourseThumbnail(e.target.value)}
         />
