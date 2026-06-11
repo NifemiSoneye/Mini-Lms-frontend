@@ -17,6 +17,7 @@ import { LoaderCircle } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 import { type Course } from "@/lib/types";
 import { CourseModal } from "./CourseModal";
+import { Skeleton } from "./ui/skeleton";
 export default function AdminCourses() {
   const { data: adminCourses, isLoading: isAdminCoursesLoading } =
     useGetAdminCoursesQuery(undefined);
@@ -80,7 +81,35 @@ export default function AdminCourses() {
     setSelectedCourse(null);
     setIsOpen(false);
   };
-  if (isAdminCoursesLoading) return <div>Loading...</div>;
+  const AdminCoursesSkeleton = () => (
+    <div className="mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className="bg-white rounded-xl overflow-hidden shadow-xl"
+          >
+            <Skeleton className="h-44 w-full" />
+            <div className="p-4">
+              <Skeleton className="h-3 w-16" />
+              <Skeleton className="h-5 w-3/4 mt-2" />
+            </div>
+            <div className="flex items-center justify-between px-4 pb-4">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-9 rounded-full" />
+                <Skeleton className="h-3 w-12" />
+              </div>
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+  if (isAdminCoursesLoading) return <AdminCoursesSkeleton />;
   return (
     <div className="mt-4">
       <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4">
