@@ -3,6 +3,7 @@ import { useState } from "react";
 import AdminOverview from "@/components/AdminOverview";
 import { useSearchParams } from "react-router-dom";
 import AdminCourses from "@/components/AdminCourses";
+import AdminLessons from "@/components/AdminLessons";
 
 type Tab = "Overview" | "Courses" | "Lessons";
 
@@ -36,6 +37,7 @@ export default function AdminDashboard() {
       </div>
       {activeTab === "Overview" && <AdminOverview />}
       {activeTab === "Courses" && <AdminCourses />}
+      {activeTab === "Lessons" && <AdminLessons />}
     </div>
   );
 }
