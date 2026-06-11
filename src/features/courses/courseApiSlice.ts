@@ -67,6 +67,7 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [
         { type: "Course", id: arg.id },
         { type: "Course", id: "LIST" },
+        { type: "Progress", id: "LIST" },
       ],
     }),
     deleteCourse: builder.mutation({
@@ -78,6 +79,7 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [
         { type: "Course", id: arg.id },
         { type: "Course", id: "LIST" },
+        { type: "Progress", id: "LIST" },
       ],
     }),
     getStats: builder.query({

@@ -10,11 +10,9 @@ import { useGetAdminCoursesQuery } from "@/features/courses/courseApiSlice";
 import { useGetCourseByIdQuery } from "@/features/courses/courseApiSlice";
 import { GraduationCap } from "lucide-react";
 import { Pencil, Trash2 } from "lucide-react";
-import {
-  useDeleteLessonMutation,
-  useAddLessonMutation,
-} from "@/features/lessons/lessonApiSlice";
+import { useDeleteLessonMutation } from "@/features/lessons/lessonApiSlice";
 import { useToast } from "@/hooks/use-toast";
+import { PlusCircle } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,6 +23,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { LessonModal } from "./LessonModal";
+import { type Lesson } from "@/lib/types";
 export default function AdminLessons() {
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   const [lessonToDelete, setLessonToDelete] = useState<string | null>(null);
@@ -38,9 +38,11 @@ export default function AdminLessons() {
 
   const lessons = courseData?.lessons ?? [];
   const [deleteLesson] = useDeleteLessonMutation();
-  const handleDelete = async (id: string) => {
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const handleDelete = async (lessonId: string) => {
     try {
-      await deleteLesson({ id }).unwrap();
+      await deleteLesson({ courseId: selectedCourseId, lessonId }).unwrap();
       toast({
         title: "Lesson deleted",
         description: "Lesson has been deleted successfully",
@@ -109,7 +111,13 @@ export default function AdminLessons() {
                   </div>
                   {/* action buttons */}
                   <div className="flex items-center gap-2 shrink-0">
-                    <button className="text-blue-500 hover:text-blue-700 p-1">
+                    <button
+                      className="text-blue-500 hover:text-blue-700 p-1"
+                      onClick={() => {
+                        setSelectedLesson(lesson);
+                        setIsModalOpen(true);
+                      }}
+                    >
                       <Pencil className="w-4 h-4" />
                     </button>
                     <button
@@ -123,8 +131,28 @@ export default function AdminLessons() {
               ))}
             </div>
           )}
+          <div
+            className="fixed bottom-4 right-4 bg-blue-800 h-12 w-12 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700 transition-colors"
+            onClick={() => {
+              setSelectedLesson(null);
+              setIsModalOpen(true);
+            }}
+          >
+            <PlusCircle className="w-6 h-6 text-white" />
+          </div>
         </div>
       )}
+
+      <LessonModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setSelectedLesson(null);
+          setIsModalOpen(false);
+        }}
+        courseId={selectedCourseId}
+        lesson={selectedLesson ?? undefined}
+      />
+
       <AlertDialog
         open={!!lessonToDelete}
         onOpenChange={() => setLessonToDelete(null)}

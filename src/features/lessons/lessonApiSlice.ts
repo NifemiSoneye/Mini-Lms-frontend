@@ -8,7 +8,11 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: lessonData,
       }),
-      invalidatesTags: [{ type: "Lesson", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Course", id: arg.courseId },
+        { type: "Course", id: "LIST" },
+        { type: "Progress", id: "LIST" },
+      ],
     }),
     updateLesson: builder.mutation({
       query: ({ courseId, lessonId, ...lessonData }) => ({
@@ -17,8 +21,9 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
         body: lessonData,
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "Course", id: arg.id },
+        { type: "Course", id: arg.courseId },
         { type: "Course", id: "LIST" },
+        { type: "Progress", id: "LIST" },
       ],
     }),
     deleteLesson: builder.mutation({
@@ -27,8 +32,9 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "Course", id: arg.id },
+        { type: "Course", id: arg.courseId },
         { type: "Course", id: "LIST" },
+        { type: "Progress", id: "LIST" },
       ],
     }),
   }),
