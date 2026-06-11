@@ -131,7 +131,10 @@ export default function VideoLessonPage() {
           <ChevronLeft className="w-4 h-4" />
           Back to Course
         </button>
-        <div className="relative w-full aspect-video lg:rounded-xl overflow-hidden rounded-md lg:h-[60vh] shadow-2xl ">
+        <div
+          style={{ animationDelay: "0.1s", opacity: 0 }}
+          className="relative w-full aspect-video lg:rounded-xl overflow-hidden rounded-md lg:h-[60vh] shadow-2xl animate-fade-slide-up "
+        >
           <iframe
             src={getYoutubeEmbedUrl(currentLesson.youtubeUrl)}
             className="w-full h-full"
@@ -198,10 +201,11 @@ export default function VideoLessonPage() {
           </div>
           <div className="w-full bg-white p-3 rounded-md min-h-[300px] flex flex-col lg:hidden shadow-2xl">
             <h1 className="text-black font-semibold">Course Content</h1>
-            {lessons.map((lesson: Lesson) => (
+            {lessons.map((lesson: Lesson, index: number) => (
               <div
                 key={lesson._id}
-                className={`flex items-center my-2 px-3 py-1 ${
+                style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+                className={`flex items-center my-2 px-3 py-1 animate-fade-slide-up ${
                   lesson._id === currentLesson._id
                     ? "bg-blue-700/20 rounded-md"
                     : ""
@@ -255,10 +259,11 @@ export default function VideoLessonPage() {
         </Button>
         <div className="w-full bg-white p-3 rounded-md min-h-[300px] lg:flex flex-col hidden shadow-2xl ">
           <h1 className="text-black font-semibold">Course Content</h1>
-          {lessons.map((lesson: Lesson) => (
+          {lessons.map((lesson: Lesson, index: number) => (
             <div
               key={lesson._id}
-              className={`flex items-center my-2 px-3 py-1 ${
+              style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+              className={`flex items-center my-2 px-3 py-1 animate-fade-slide-up ${
                 lesson._id === currentLesson._id
                   ? "bg-blue-700/20 rounded-md"
                   : ""

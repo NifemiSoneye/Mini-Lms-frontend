@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { LessonModal } from "./LessonModal";
 import { type Lesson } from "@/lib/types";
+import { Skeleton } from "./ui/skeleton";
 export default function AdminLessons() {
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   const [lessonToDelete, setLessonToDelete] = useState<string | null>(null);
@@ -55,6 +56,26 @@ export default function AdminLessons() {
       });
     }
   };
+  const AdminLessonsSkeleton = () => (
+    <div className="flex flex-col gap-3">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div
+          key={i}
+          className="bg-white rounded-xl p-4 flex items-center gap-4 shadow-sm"
+        >
+          <Skeleton className="h-10 w-10 rounded-full shrink-0" />
+          <div className="flex-1 space-y-2">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-3 w-16" />
+          </div>
+          <div className="flex gap-2 shrink-0">
+            <Skeleton className="h-6 w-6 rounded" />
+            <Skeleton className="h-6 w-6 rounded" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
   return (
     <div className="mt-4">
       <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">
@@ -81,7 +102,7 @@ export default function AdminLessons() {
             </span>
           </div>
           {isLessonsLoading ? (
-            <div>Loading...</div>
+            <AdminLessonsSkeleton />
           ) : lessons.length === 0 ? (
             <div className="flex flex-col items-center justify-center mt-10 gap-3">
               <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center">
@@ -91,10 +112,11 @@ export default function AdminLessons() {
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {lessons.map((lesson: any) => (
+              {lessons.map((lesson: any, index: number) => (
                 <div
                   key={lesson._id}
-                  className="bg-white rounded-xl p-4 flex items-center gap-4 shadow-sm"
+                  style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+                  className="bg-white rounded-xl p-4 flex items-center gap-4 shadow-sm animate-fade-slide-up"
                 >
                   {/* order number circle */}
                   <div className="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center shrink-0">

@@ -139,10 +139,11 @@ export default function CourseDetailsPage() {
               <p className="text-black font-semibold text-xl hidden md:block p-3">
                 Course Content
               </p>
-              {lessons.map((lesson: Lesson) => (
+              {lessons.map((lesson: Lesson, index: number) => (
                 <div
                   key={lesson._id}
-                  className={`flex items-center gap-2 p-2 ${
+                  style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+                  className={`flex items-center gap-2 p-2 animate-fade-slide-up ${
                     lesson._id === nextLesson?._id
                       ? "bg-blue-100 border-t-2 border-t-blue-400"
                       : null

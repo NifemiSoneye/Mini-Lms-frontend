@@ -119,10 +119,11 @@ export default function AdminCourses() {
   return (
     <div className="mt-4">
       <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4">
-        {adminCourses?.map((course: any) => (
+        {adminCourses?.map((course: any, index: number) => (
           <div
             key={course._id}
-            className="bg-white rounded-xl overflow-hidden shadow-xl"
+            style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+            className="bg-white rounded-xl overflow-hidden shadow-xl animate-fade-slide-up"
           >
             {/* thumbnail */}
             <div className="h-44 w-full">

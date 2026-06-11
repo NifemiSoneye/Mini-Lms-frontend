@@ -70,7 +70,7 @@ export default function CoursePage() {
   return (
     <div className="w-full overflow-x-hidden flex flex-col gap-3">
       {latestCourse ? (
-        <div className="bg-blue-600 rounded-md border border-gray-100 p-4  text-white md:max-w-[50%]">
+        <div className="bg-blue-600 rounded-md border border-gray-100 p-4  text-white md:max-w-[50%] animate-fade-slide-up">
           <p className="text-sm text-blue-200">Current Progress</p>
           <p className="text-xl font-bold mt-1">{latestCourse.course.title}</p>
 

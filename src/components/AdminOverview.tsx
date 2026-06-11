@@ -48,15 +48,21 @@ export default function AdminOverview() {
   return (
     <div className="mt-4">
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
+        <div className="bg-white rounded-xl p-4 shadow-sm animate-fade-slide-up">
+          <div
+            style={{ animationDelay: "0s", opacity: 0 }}
+            className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3"
+          >
             <BookOpen className="w-5 h-5 text-blue-600" />
           </div>
           <p className="text-3xl font-bold text-black">{stats.totalCourses}</p>
           <p className="text-gray-500 text-sm mt-1">Total Courses</p>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm">
+        <div
+          style={{ animationDelay: "0.1s", opacity: 0 }}
+          className="bg-white rounded-xl p-4 shadow-sm animate-fade-slide-up"
+        >
           <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
             <PlayCircle className="w-5 h-5 text-blue-600" />
           </div>
@@ -64,7 +70,10 @@ export default function AdminOverview() {
           <p className="text-gray-500 text-sm mt-1">Total Lessons</p>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm col-span-2 lg:col-span-1">
+        <div
+          style={{ animationDelay: "0.2s", opacity: 0 }}
+          className="bg-white rounded-xl p-4 shadow-sm col-span-2 lg:col-span-1 animate-fade-slide-up"
+        >
           <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
             <UsersRound className="w-5 h-5 text-blue-600" />
           </div>
@@ -93,8 +102,12 @@ export default function AdminOverview() {
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
-            {adminCourses.map((course: any) => (
-              <div key={course._id} className="flex items-center gap-3 p-4">
+            {adminCourses.map((course: any, index: number) => (
+              <div
+                key={course._id}
+                style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+                className="flex items-center gap-3 p-4 animate-fade-slide-up"
+              >
                 <img
                   src={course.thumbnailUrl}
                   alt={course.title}

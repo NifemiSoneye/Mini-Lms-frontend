@@ -66,8 +66,12 @@ export default function CourseCard({ courses, isLoading }: Props) {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 my-3">
-        {courses.map((course) => (
-          <div className="bg-white rounded-md overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-shadow duration-300 p-4 min-w-0">
+        {courses.map((course, index) => (
+          <div
+            key={course._id}
+            className="bg-white rounded-md overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-shadow duration-300 p-4 min-w-0 animate-fade-slide-up"
+            style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
+          >
             {/* IMAGE */}
             <div className="h-40 w-full">
               <img
