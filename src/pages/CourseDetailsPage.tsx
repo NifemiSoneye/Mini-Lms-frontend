@@ -220,12 +220,15 @@ export default function CourseDetailsPage() {
 
             <div className="flex justify-between text-sm mb-1">
               <p>
-                {Math.round((completedLessons.length / lessons.length) * 100)}%
-                Complete
+                {completedLessons.length
+                  ? Math.round((completedLessons.length / lessons.length) * 100)
+                  : 0}
+                % Complete
               </p>
             </div>
             <Button
               variant="link"
+              disabled={!nextLesson}
               onClick={() =>
                 navigate(`/courses/${id}/lessons/${nextLesson?._id}`)
               }
@@ -248,7 +251,11 @@ export default function CourseDetailsPage() {
               </div>
               <div className="text-center">
                 <p className="text-white text-2xl font-bold">
-                  {Math.round((completedLessons.length / lessons.length) * 100)}
+                  {completedLessons.length
+                    ? Math.round(
+                        (completedLessons.length / lessons.length) * 100,
+                      )
+                    : 0}
                   %
                 </p>
                 <p className="text-blue-200 text-xs uppercase">Complete</p>

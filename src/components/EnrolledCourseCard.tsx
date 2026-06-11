@@ -78,9 +78,12 @@ export default function EnrolledCourseCard({ progressDocs, isLoading }: Props) {
             </p>
 
             <p className="text-gray-800 text-[0.875rem]">
-              {Math.round(
-                (doc.completedLessons.length / doc.course.lessonCount) * 100,
-              )}
+              {doc.completedLessons.length
+                ? Math.round(
+                    (doc.completedLessons.length / doc.course.lessonCount) *
+                      100,
+                  )
+                : 0}
               % complete
             </p>
 
