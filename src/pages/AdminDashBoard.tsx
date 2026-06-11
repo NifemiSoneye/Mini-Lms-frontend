@@ -2,6 +2,7 @@ import { useGetStatsQuery } from "@/features/courses/courseApiSlice";
 import { useState } from "react";
 import AdminOverview from "@/components/AdminOverview";
 import { useSearchParams } from "react-router-dom";
+import AdminCourses from "@/components/AdminCourses";
 
 type Tab = "Overview" | "Courses" | "Lessons";
 
@@ -34,6 +35,7 @@ export default function AdminDashboard() {
         ))}
       </div>
       {activeTab === "Overview" && <AdminOverview />}
+      {activeTab === "Courses" && <AdminCourses />}
     </div>
   );
 }

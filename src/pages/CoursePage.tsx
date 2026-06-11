@@ -94,11 +94,13 @@ export default function CoursePage() {
               {latestCourse.course.lessonCount} Lessons
             </p>
             <p>
-              {Math.round(
-                (latestCourse.completedLessons.length /
-                  latestCourse.course.lessonCount) *
-                  100,
-              )}
+              {latestCourse.completedLessons.length
+                ? Math.round(
+                    (latestCourse.completedLessons.length /
+                      latestCourse.course.lessonCount) *
+                      100,
+                  )
+                : 0}
               % Complete
             </p>
           </div>
