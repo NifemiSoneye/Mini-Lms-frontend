@@ -73,7 +73,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
             style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
           >
             {/* IMAGE */}
-            <div className="h-40 w-full">
+            <div className="h-30 w-full">
               <img
                 src={course.thumbnailUrl}
                 alt={course.title}
@@ -93,7 +93,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
             <div>
               <Button
                 variant="default"
-                className="text-blue-500 bg-blue-100 w-full my-1 rounded-sm"
+                className="text-blue-500 bg-blue-100 w-full my-1 rounded-sm hover:bg-blue-300"
                 onClick={() => handleEnroll(course.id)}
               >
                 Enroll

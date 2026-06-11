@@ -34,6 +34,16 @@ export const progressApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Progress", id: "LIST" }],
     }),
+    unenrollFromCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `/progress/${courseId}/unenroll`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [
+        { type: "Progress", id: "LIST" },
+        { type: "Course", id: "LIST" },
+      ],
+    }),
   }),
 });
 
@@ -42,4 +52,5 @@ export const {
   useMarkLessonCompleteMutation,
   useGetMyCoursesQuery,
   useEnrollInCourseMutation,
+  useUnenrollFromCourseMutation,
 } = progressApiSlice;

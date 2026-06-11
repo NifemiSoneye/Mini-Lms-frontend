@@ -126,7 +126,7 @@ export default function CourseDetailsPage() {
               onClick={() =>
                 navigate(`/courses/${id}/lessons/${nextLesson?._id}`)
               }
-              className="w-full bg-white text-blue-700 my-1 rounded-md"
+              className="w-full bg-white text-blue-700 my-1 rounded-md hover:no-underline hover:cursor-pointer "
             >
               Continue Learning
             </Button>
@@ -233,7 +233,7 @@ export default function CourseDetailsPage() {
               onClick={() =>
                 navigate(`/courses/${id}/lessons/${nextLesson?._id}`)
               }
-              className="w-full bg-white text-blue-700 my-1 rounded-md"
+              className="w-full bg-white text-blue-700 my-1 rounded-md hover:no-underline hover:cursor-pointer"
             >
               Continue Learning
             </Button>

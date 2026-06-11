@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { useUnenrollFromCourseMutation } from "@/features/progress/progressApiSlice";
+import { useToast } from "@/hooks/use-toast";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 type ProgressDoc = {
   _id: string;
   completedLessons: string[];
@@ -19,7 +23,29 @@ type Props = {
 };
 
 export default function EnrolledCourseCard({ progressDocs, isLoading }: Props) {
+  const { toast } = useToast();
   const navigate = useNavigate();
+  const [loadingCourseId, setLoadingCourseId] = useState<string | null>(null);
+
+  const [unenrollFromCourse, { isLoading: unEnrollLoading }] =
+    useUnenrollFromCourseMutation();
+
+  const handleUnenroll = async (courseId: string) => {
+    try {
+      setLoadingCourseId(courseId);
+      await unenrollFromCourse(courseId).unwrap();
+      toast({
+        title: "Unenrolled successfully",
+        description: "Course removed from your list",
+      });
+    } catch (err) {
+      toast({
+        variant: "default",
+        title: "Error! 🎉",
+        description: "Unenroll Error",
+      });
+    }
+  };
 
   const EnrolledCourseCardSkeleton = () => {
     return (
@@ -86,16 +112,28 @@ export default function EnrolledCourseCard({ progressDocs, isLoading }: Props) {
                 : 0}
               % complete
             </p>
-
-            <Button
-              variant="default"
-              className="text-blue-500 bg-blue-100 w-full my-1 rounded-sm"
-              onClick={() => navigate(`/courses/${doc.course._id}`)}
-            >
-              {doc.completedLessons.length === 0
-                ? "Begin Course"
-                : "Resume Course"}
-            </Button>
+            <div className="w-full grid grid-cols-2 gap-2 ">
+              <Button
+                variant="default"
+                className="text-blue-500 bg-blue-100 w-full my-1 rounded-sm hover:bg-blue-300"
+                onClick={() => navigate(`/courses/${doc.course._id}`)}
+              >
+                {doc.completedLessons.length === 0
+                  ? "Begin Course"
+                  : "Resume Course"}
+              </Button>
+              <Button
+                variant="default"
+                className="text-red-200 bg-red-700 w-full my-1 rounded-sm hover:bg-red-900"
+                onClick={() => handleUnenroll(doc.course._id)}
+              >
+                {loadingCourseId === doc.course._id ? (
+                  <Loader className="w-4 h-4 text-white animate-spin" />
+                ) : (
+                  "Unenroll"
+                )}
+              </Button>
+            </div>
           </div>
         ))}
       </div>
