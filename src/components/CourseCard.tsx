@@ -80,10 +80,10 @@ export default function CourseCard({ courses, isLoading }: Props) {
                 className="h-full w-full object-cover rounded-md"
               />
             </div>
-            <p className="text-blue-700  uppercase my-2 font-medium">
+            <p className="text-blue-700  uppercase my-1 font-medium">
               {course.category}
             </p>
-            <p className="text-black font-semibold text-[1.2rem]">
+            <p className="text-black font-semibold text-[1rem]">
               {course.title}
             </p>
             <p className="text-gray-800  text-[0.875rem]">
@@ -93,7 +93,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
             <div>
               <Button
                 variant="default"
-                className="text-blue-500 bg-blue-100 w-full my-2 rounded-sm"
+                className="text-blue-500 bg-blue-100 w-full my-1 rounded-sm"
                 onClick={() => handleEnroll(course.id)}
               >
                 Enroll

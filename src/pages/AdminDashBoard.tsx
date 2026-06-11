@@ -9,7 +9,7 @@ type Tab = "Overview" | "Courses" | "Lessons";
 
 export default function AdminDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "My Courses";
+  const activeTab = searchParams.get("tab") || "Overview";
   const { data: stats, isLoading: isStatsLoading } =
     useGetStatsQuery(undefined);
 

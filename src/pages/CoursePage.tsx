@@ -121,10 +121,10 @@ export default function CoursePage() {
           <button
             key={tab}
             onClick={() => setTab(tab)}
-            className={`flex-1 flex items-center justify-center gap-5 py-1 text-[0.78rem] font-medium border-b transition-colors
+            className={`flex-1 flex items-center justify-center gap-5 py-1 text-[0.78rem] font-semibold border-b transition-colors
                   ${
                     activeTab === tab
-                      ? "text-blue-500 border-blue-600"
+                      ? "text-blue-500 border-blue-900"
                       : "text-gray-800 border-transparent"
                   }`}
           >
@@ -132,7 +132,7 @@ export default function CoursePage() {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-3 gap-2 px-3 py-1">
+      <div className="grid grid-cols-3 gap-2 px-3">
         {allCategories.map((category) => (
           <button
             key={category}
