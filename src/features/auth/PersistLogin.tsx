@@ -53,10 +53,8 @@ const PersistLogin = () => {
   } else if (isLoading) {
     //persist: yes, token: no
     content = (
-      <div className="fixed inset-0 z-50 bg-[#0B1628]">
-        <div className="w-full h-dvh grid place-content-center">
-          <LoaderCircle className="h-48 w-48 animate-spin text-white" />
-        </div>
+      <div className="fixed inset-0 bg-white grid place-content-center">
+        <LoaderCircle className="h-16 w-16 animate-spin text-blue-800" />
       </div>
     );
   } else if (isError) {
