@@ -98,7 +98,14 @@ export default function VideoLessonPage() {
   const nextLesson: Lesson | undefined = lessons[currentIndex + 1];
   const isCompleted = completedLessons.includes(lessonId);
   const getYoutubeEmbedUrl = (url: string) => {
-    const videoId = url.split("v=")[1]?.split("&")[0];
+    let videoId = "";
+
+    if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1]?.split("?")[0];
+    } else if (url.includes("v=")) {
+      videoId = url.split("v=")[1]?.split("&")[0];
+    }
+
     return `https://www.youtube.com/embed/${videoId}`;
   };
   /* const getYoutubeThumbnail = (url: string) => {
