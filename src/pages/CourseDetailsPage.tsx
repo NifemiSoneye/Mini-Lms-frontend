@@ -69,7 +69,7 @@ export default function CourseDetailsPage() {
     <>
       <div className="mx-4 md:grid lg:grid-cols-[1.5fr_1fr] gap-5">
         <div>
-          <div className="relative my-4 h-48 md:h-80 rounded-xl overflow-hidden shadow-xl">
+          <div className="relative my-4 h-48 md:h-80 rounded-xl overflow-hidden shadow-xl animate-fade-slide-up">
             <img
               src={course.thumbnailUrl}
               alt={course.title}
