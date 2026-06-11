@@ -12,7 +12,7 @@ type RefreshResult = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3500",
+  baseUrl: "https://mini-lms-backend-pkgt.onrender.com",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;

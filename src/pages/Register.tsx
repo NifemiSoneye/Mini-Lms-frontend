@@ -202,7 +202,7 @@ export default function Register() {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
             {passwordFocus && password.length > 0 && !validPassword && (
-              <div className="bg-[#1E3160] border border-[#C9A84C26] rounded-md p-3 mt-2 text-[0.65rem] text-[#8A93A8] space-y-1">
+              <div className="bg-gray-700 border border-[#C9A84C26] rounded-md p-3 mt-2 text-[0.65rem] text-[#8A93A8] space-y-1">
                 <p className="text-[#C9A84C] font-semibold mb-1">
                   Password requirements:
                 </p>

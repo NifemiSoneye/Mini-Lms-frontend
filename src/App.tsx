@@ -19,8 +19,8 @@ function App() {
     <>
       <Suspense
         fallback={
-          <div className="fixed inset-0 bg-[#0B1628] grid place-content-center">
-            <LoaderCircle className="h-16 w-16 animate-spin text-white" />
+          <div className="fixed inset-0 bg-white grid place-content-center">
+            <LoaderCircle className="h-16 w-16 animate-spin text-blue-800" />
           </div>
         }
       >

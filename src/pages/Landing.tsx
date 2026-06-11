@@ -42,16 +42,13 @@ export default function Landing() {
               </h1>
               <p
                 className="text-gray-500 mt-4 text-lg max-w-md mx-auto md:mx-0 animate-fade-slide-up"
-                style={{ animationDelay: "150ms" }}
+                style={{ animationDelay: "0ms" }}
               >
                 Access world-class courses and track your progress all in one
                 place. Your journey to mastery starts here with professional
                 guidance.
               </p>
-              <div
-                className="flex flex-col sm:flex-row gap-3 mt-8 justify-center md:justify-start animate-fade-slide-up"
-                style={{ animationDelay: "300ms" }}
-              >
+              <div className="flex flex-col sm:flex-row gap-3 mt-8 justify-center md:justify-start ">
                 <Button
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-base"
                   asChild
