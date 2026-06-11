@@ -15,7 +15,11 @@ import useAuth from "@/features/auth/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useGetMyCoursesQuery } from "@/features/progress/progressApiSlice";
 export default function SideBar() {
+  const { data: myCoursesData, isLoading: myCoursesLoading } =
+    useGetMyCoursesQuery(undefined);
+  const myCourses = myCoursesData ? myCoursesData : [];
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
   const { toast } = useToast();
@@ -71,7 +75,7 @@ export default function SideBar() {
           <p>Home</p>
         </Link>
         <button
-          className={`flex items-center gap-3 p-3 rounded-md mx-3 w-[90%] ${
+          className={`flex items-center gap-3 p-3 rounded-md mx-2 w-[90%] ${
             location.pathname === "/admin"
               ? "text-blue-600 bg-blue-50 font-medium"
               : "text-gray-700"
@@ -81,6 +85,47 @@ export default function SideBar() {
           <LayoutDashboard className="w-5 h-5" />
           <p>Admin</p>
         </button>
+        <div className="relative">
+          <button
+            className={`flex items-center gap-3 p-3 rounded-md mx-2 w-[90%] justify-between ${
+              location.pathname.startsWith("/courses")
+                ? "text-blue-600 bg-blue-50 font-medium"
+                : "text-gray-700"
+            }`}
+            onClick={() => {
+              setDropdownOpen(!dropdownOpen);
+            }}
+          >
+            <div className="flex items-center gap-3 ">
+              <LayoutDashboard className="w-5 h-5" />
+              Courses
+            </div>
+            {dropdownOpen ? <ChevronUp /> : <ChevronDown />}
+          </button>
+          {dropdownOpen && (
+            <div className="absolute left-0 top-full m-2 w-full bg-white border border-gray-100 rounded-md shadow-lg z-50">
+              {myCoursesLoading ? (
+                <p className="p-3 text-sm text-gray-500">Loading...</p>
+              ) : myCourses.length === 0 ? (
+                <p className="p-3 text-sm text-gray-500">No courses</p>
+              ) : (
+                myCourses.map((item: any) => (
+                  <Link
+                    key={item.course._id}
+                    to={`/courses/${item.course._id}`}
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      dispatch(closeSidebar());
+                    }}
+                    className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {item.course.title}
+                  </Link>
+                ))
+              )}
+            </div>
+          )}
+        </div>
       </aside>
     </>
   );
