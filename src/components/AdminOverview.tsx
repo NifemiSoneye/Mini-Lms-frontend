@@ -2,11 +2,21 @@ import { useGetStatsQuery } from "@/features/courses/courseApiSlice";
 import { BookOpen, PlayCircle, UsersRound } from "lucide-react";
 import { useGetAdminCoursesQuery } from "@/features/courses/courseApiSlice";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function AdminOverview() {
   const { data: stats, isLoading } = useGetStatsQuery(undefined);
   const { data: adminCourses = [], isLoading: isCoursesLoading } =
     useGetAdminCoursesQuery(undefined);
+  const [page, setPage] = useState(1);
+  const coursesPerPage = 3;
+
+  const totalPages = Math.ceil(adminCourses.length / coursesPerPage);
+  const paginatedCourses = adminCourses.slice(
+    (page - 1) * coursesPerPage,
+    page * coursesPerPage,
+  );
 
   const AdminOverviewSkeleton = () => (
     <div className="mt-4">
@@ -86,6 +96,27 @@ export default function AdminOverview() {
       <div className="bg-white rounded-xl shadow-sm mt-6">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <h2 className="text-black font-semibold text-lg">Recent Courses</h2>
+          {totalPages > 1 && (
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setPage((p) => p - 1)}
+                disabled={page === 1}
+                className="disabled:opacity-40"
+              >
+                <ChevronLeft className="w-5 h-5 text-blue-600" />
+              </button>
+              <p className="text-sm text-gray-600">
+                {page} / {totalPages}
+              </p>
+              <button
+                onClick={() => setPage((p) => p + 1)}
+                disabled={page === totalPages}
+                className="disabled:opacity-40"
+              >
+                <ChevronRight className="w-5 h-5 text-blue-600" />
+              </button>
+            </div>
+          )}
         </div>
         {isCoursesLoading ? (
           <div className="divide-y divide-gray-100">
@@ -102,7 +133,7 @@ export default function AdminOverview() {
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
-            {adminCourses.map((course: any, index: number) => (
+            {paginatedCourses.map((course: any, index: number) => (
               <div
                 key={course._id}
                 style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}

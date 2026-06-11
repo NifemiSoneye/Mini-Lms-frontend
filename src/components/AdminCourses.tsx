@@ -23,9 +23,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function AdminCourses() {
+  const [page, setPage] = useState(1);
+  const coursesPerPage = 3;
   const { data: adminCourses, isLoading: isAdminCoursesLoading } =
     useGetAdminCoursesQuery(undefined);
+  const totalPages = Math.ceil(adminCourses.length / coursesPerPage);
+  const paginatedCourses = adminCourses.slice(
+    (page - 1) * coursesPerPage,
+    page * coursesPerPage,
+  );
   const [deleteCourse] = useDeleteCourseMutation();
   const [togglePublish] = useTogglePublishMutation();
   const [updateCourse] = useUpdateCourseMutation();
@@ -118,8 +126,32 @@ export default function AdminCourses() {
   if (isAdminCoursesLoading) return <AdminCoursesSkeleton />;
   return (
     <div className="mt-4">
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <h2 className="text-black font-semibold text-lg">Recent Courses</h2>
+        {totalPages > 1 && (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setPage((p) => p - 1)}
+              disabled={page === 1}
+              className="disabled:opacity-40"
+            >
+              <ChevronLeft className="w-5 h-5 text-blue-600" />
+            </button>
+            <p className="text-sm text-gray-600">
+              {page} / {totalPages}
+            </p>
+            <button
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page === totalPages}
+              className="disabled:opacity-40"
+            >
+              <ChevronRight className="w-5 h-5 text-blue-600" />
+            </button>
+          </div>
+        )}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4">
-        {adminCourses?.map((course: any, index: number) => (
+        {paginatedCourses?.map((course: any, index: number) => (
           <div
             key={course._id}
             style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}

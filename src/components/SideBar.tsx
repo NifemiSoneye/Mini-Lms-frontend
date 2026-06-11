@@ -11,12 +11,32 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { LayoutDashboard } from "lucide-react";
-
+import useAuth from "@/features/auth/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 export default function SideBar() {
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
+  const { toast } = useToast();
   const location = useLocation();
   const isOpen = useSelector(selectSidebarOpen);
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const handleAdminClick = (e: React.MouseEvent) => {
+    if (!isAdmin) {
+      e.preventDefault();
+      dispatch(closeSidebar());
+      toast({
+        variant: "destructive",
+        title: "Access Denied",
+        description: "You don't have permission to access the admin dashboard.",
+      });
+    } else {
+      navigate("/admin");
+      dispatch(closeSidebar());
+    }
+  };
   return (
     <>
       {/* overlay - mobile only, outside the aside */}
@@ -50,18 +70,17 @@ export default function SideBar() {
           <Home className="w-5 h-5" />
           <p>Home</p>
         </Link>
-        <Link
-          to="/admin"
-          className={`flex items-center gap-3 p-3 rounded-md mx-2 ${
+        <button
+          className={`flex items-center gap-3 p-3 rounded-md mx-3 w-[90%] ${
             location.pathname === "/admin"
               ? "text-blue-600 bg-blue-50 font-medium"
               : "text-gray-700"
           }`}
-          onClick={() => dispatch(closeSidebar())}
+          onClick={handleAdminClick}
         >
           <LayoutDashboard className="w-5 h-5" />
           <p>Admin</p>
-        </Link>
+        </button>
       </aside>
     </>
   );

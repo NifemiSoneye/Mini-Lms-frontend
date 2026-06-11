@@ -60,8 +60,7 @@ export default function EnrolledCourseCard({ progressDocs, isLoading }: Props) {
             className="bg-white rounded-md overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-shadow duration-300 p-4  min-w-0 animate-fade-slide-up"
             style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
           >
-            {/* IMAGE */}
-            <div className="h-40 w-full">
+            <div className="h-30 w-full">
               <img
                 src={doc.course.thumbnailUrl}
                 alt={doc.course.title}
