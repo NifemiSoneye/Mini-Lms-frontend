@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Clock, BarChart2, GraduationCap } from "lucide-react";
 export default function Landing() {
+  const thisYear = new Date().getFullYear();
   const features = [
     {
       icon: Clock,
@@ -141,7 +142,7 @@ export default function Landing() {
           {/* Links */}
           {/* Copyright */}
           <p className="text-gray-400 text-sm text-center">
-            © 2024 Coursa. All rights reserved.
+            © {thisYear} Coursa. All rights reserved.
           </p>
         </div>
       </footer>

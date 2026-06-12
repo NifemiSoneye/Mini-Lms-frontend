@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { type EntityState } from "@reduxjs/toolkit";
 import { type Course } from "@/lib/types";
 import { Button } from "./ui/button";
@@ -6,18 +6,21 @@ import { useEnrollInCourseMutation } from "@/features/progress/progressApiSlice"
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Loader } from "lucide-react";
 type Props = {
   courses: Course[];
   isLoading: boolean;
 };
 
 export default function CourseCard({ courses, isLoading }: Props) {
+  const [loadingCourseId, setLoadingCourseId] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
   const [enroll, { isLoading: isEnrollLoading }] = useEnrollInCourseMutation();
   console.log(courses);
   const handleEnroll = async (courseId: string) => {
     try {
+      setLoadingCourseId(courseId);
       await enroll(courseId).unwrap();
       toast({
         title: "Enrolled successfully! 🎉",
@@ -80,7 +83,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
                 className="h-full w-full object-cover rounded-md"
               />
             </div>
-            <p className="text-blue-700  uppercase my-1 font-medium">
+            <p className="text-blue-600 text-xs font-semibold uppercase">
               {course.category}
             </p>
             <p className="text-black font-semibold text-[1rem]">
@@ -96,7 +99,11 @@ export default function CourseCard({ courses, isLoading }: Props) {
                 className="text-blue-500 bg-blue-100 w-full my-1 rounded-sm hover:bg-blue-300"
                 onClick={() => handleEnroll(course.id)}
               >
-                Enroll
+                {loadingCourseId === course.id ? (
+                  <Loader className="w-4 h-4 text-white animate-spin" />
+                ) : (
+                  "Unenroll"
+                )}
               </Button>
             </div>
           </div>
