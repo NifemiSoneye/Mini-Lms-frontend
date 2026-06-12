@@ -83,7 +83,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
                 className="h-full w-full object-cover rounded-md"
               />
             </div>
-            <p className="text-blue-600 text-xs font-semibold uppercase">
+            <p className="text-blue-600 text-xs font-semibold uppercase my-1">
               {course.category}
             </p>
             <p className="text-black font-semibold text-[1rem]">
@@ -102,7 +102,7 @@ export default function CourseCard({ courses, isLoading }: Props) {
                 {loadingCourseId === course.id ? (
                   <Loader className="w-4 h-4 text-white animate-spin" />
                 ) : (
-                  "Unenroll"
+                  "Enroll"
                 )}
               </Button>
             </div>

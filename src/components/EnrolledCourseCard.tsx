@@ -93,7 +93,7 @@ export default function EnrolledCourseCard({ progressDocs, isLoading }: Props) {
                 className="h-full w-full object-cover rounded-md"
               />
             </div>
-            <p className="text-blue-600 text-xs font-semibold uppercase">
+            <p className="text-blue-600 text-xs font-semibold uppercase my-1">
               {doc.course.category}
             </p>
             <p className="text-black font-semibold text-[1rem]">
